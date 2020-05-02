@@ -4,7 +4,8 @@ A system tray quick menu for Home Assistant and Blue Iris
 This is a quick system tray app for toggling stuff in Home Assistant and popping up camera views without having to navigate a webpage.
 I can also handle popping up a camera view based on an incoming MQTT topic, so home automation can pop up views upon events on any desktop machine you're running it on.  
 
-Tested on Linux and Windows 10.
+Tested on Linux and Windows 10.  
+Note that I am a python noob and this was whipped together in an evening, so there's a lot of room for improvement here.  I was inspired by this thread - https://www.reddit.com/r/homeassistant/comments/g8noox/windows_system_tray_app_to_trigger_automations/ to create something that could run on my linux and windows desktops and give me quick access to my cameras.
 
 # Installation
 Requires Python 3.7+
