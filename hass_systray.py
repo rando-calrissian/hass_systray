@@ -15,7 +15,7 @@ BLUEIRIS_URL = 'http://[YOUR_BLUE_IRIS_IP_OR_URL]'
 HOMEASSISTANT_URL = 'http://[YOUR_HASS_IP_OR_URL]'
 MQTT_URL = '[YOUR_MQTT_IP_OR_URL]'
 TRAY_TOOLTIP = 'Home Assistant' 
-TRAY_ICON = 'icon.png' 
+TRAY_ICON = 'https://www.home-assistant.io/images/supported_brands/home-assistant.png' 
 
 
 # Anything listed here will go on the main menu.  Groups listed will be treated as one
@@ -102,7 +102,13 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     def __init__(self, frame):
         self.frame = frame
         super(TaskBarIcon, self).__init__()
-        self.set_icon(TRAY_ICON)
+        # download our Icon if we don't already have it.
+        try:
+            png = PIL.Image.open("icon.png")
+        except:
+            png = PIL.Image.open(requests.get(TRAY_ICON, stream=True).raw)
+            png.save( "tray_icon.png" )
+        self.set_icon("tray_icon.png")
         self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.on_left_down)
         self.lights = lights
         self.cams = cams
