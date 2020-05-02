@@ -1,0 +1,8 @@
+wxPython
+paho-mqtt
+requests
+opencv-python
+numpy
+pillow
+tk
+json
