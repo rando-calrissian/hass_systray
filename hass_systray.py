@@ -293,6 +293,7 @@ def is_json( input ):
 class VidWin:
     def __init__(self, window, window_title, video_source=0, timeout = None):
         self.window = window
+        self.window.withdraw()
         self.window.title(window_title)
         self.video_source = video_source
         if timeout is not None:
@@ -317,8 +318,8 @@ class VidWin:
         self.update()
 
         self.window.mainloop()
-
-    def snapshot(self):
+        
+    def snapshot(self, event):
         # Get a frame from the video source
         ret, frame = self.vid.get_frame()
         if ret:
@@ -334,10 +335,10 @@ class VidWin:
 
         if ret:
             img = PIL.Image.fromarray(frame)
-            height = self.canvas.winfo_height()
+            height = self.vid.height
             #Video is costly and scaling frames is too, so let's only do it if we have to
             if ( img.height * 2 <= height ):
-                width = self.canvas.winfo_width()
+                width = self.vid.width
                 img =img.resize((width,height), PIL.Image.ANTIALIAS )
             self.photo = PIL.ImageTk.PhotoImage(image = img)
             self.canvas.create_image(0, 0, image = self.photo, anchor = tkinter.NW)
@@ -349,17 +350,14 @@ class VidWin:
             
 
     def center(self, win):
-        win.update_idletasks()
-        width = win.winfo_width()
-        frm_width = win.winfo_rootx() - win.winfo_x()
-        win_width = width + 2 * frm_width
-        height = win.winfo_height()
-        titlebar_height = win.winfo_rooty() - win.winfo_y()
-        win_height = height + titlebar_height + frm_width
-        x = win.winfo_screenwidth() // 2 - win_width // 2
-        y = win.winfo_screenheight() // 2 - win_height // 2
+        width = int(self.vid.width)
+        height = int(self.vid.height)
+        disp_width, disp_height = wx.DisplaySize()
+        x = int(disp_width // 2 - width // 2)
+        y = int(disp_height // 2 - height // 2)
         win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
         win.deiconify()
+        win.update_idletasks()
 
 class CamVideoCapture:
     def __init__(self, video_source=0):
@@ -377,8 +375,8 @@ class CamVideoCapture:
         if height * 2 < scr_height:
             width = width * 2
             height = height * 2
-        self.width = width
-        self.height = height
+        self.width = int(width)
+        self.height = int(height)
         
 
     def get_frame(self):
