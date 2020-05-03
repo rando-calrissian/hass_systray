@@ -77,3 +77,6 @@ or:
 or however you run python3 on your system.
 
 
+# Note
+
+For cameras I'm currently piping OpenCV through PIL into a tkinter window.  This is overly complicated, and uses more CPU resources than I'd like.  I have a path that works using OpenCV by itself.  However, there's also some strange conflict between KDE's built in QT libraries and the libraries that OpenCV wants to run that cause it to have a strange problem I wasn't able to rectify.  If you want this version, let me know and I'll post it.  I'll probably take a bit of time and make that the default path on windows if I can't figure out a way to make it work without problems on Linux.
