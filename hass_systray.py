@@ -293,6 +293,9 @@ def is_json( input ):
 class VidWin:
     def __init__(self, window, window_title, video_source=0, timeout = None):
         self.window = window
+        self.window.lift()
+        self.window.attributes("-topmost", True)      
+        self.window.focus_force()
         self.window.withdraw()
         self.window.title(window_title)
         self.video_source = video_source
